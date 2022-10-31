@@ -23,12 +23,14 @@ import java.time.LocalDate;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "username")
     private String username;
-    private String firstname;
-    private String lastname;
-//    @Convert(converter = BirthdayConverter.class)
-    @Column(name = "birth_date")
-    private Birthday birthDate;
+    @Embedded
+//    @AttributeOverride(name = "birthDate", column = @Column(name = "birth_date"))
+    private PersonalInfo personalInfo;
     @Type(type = "dmdev")
 //    @Type(type = "jsonb")
     private String info;
