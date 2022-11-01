@@ -36,4 +36,8 @@ public class User {
     private String info;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    private Company company;
 }

@@ -6,7 +6,15 @@ CREATE TABLE users
     lastname   VARCHAR(128),
     birth_date DATE,
     role       VARCHAR(32),
-    info       JSONB
+    info       JSONB,
+    company_id BIGINT REFERENCES company(id)
 );
 
 drop table users;
+
+
+create table company
+(
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(64) NOT NULL UNIQUE
+);

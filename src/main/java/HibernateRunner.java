@@ -1,40 +1,40 @@
 import lombok.extern.slf4j.Slf4j;
+import model.entity.Company;
 import model.entity.PersonalInfo;
 import model.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 @Slf4j
 public class HibernateRunner {
 
     public static void main(String[] args) {
-        User user = User.builder()
-                .username("petr@gmail.com")
-                .personalInfo(PersonalInfo.builder()
-                        .firstname("Petr")
-                        .lastname("Petrov")
-                        .build())
+        Company company = Company.builder()
+                .name("Google2")
                 .build();
-        log.info("User entity is in transient state, object: {}", user);
+        User user = User.builder()
+                .username("ivan@gmail.com")
+                .personalInfo(PersonalInfo.builder()
+                        .firstname("Ivan")
+                        .lastname("Ivanov")
+                        .build())
+                .company(company)
+                .build();
 
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
 
             Session session1 = sessionFactory.openSession();
             try (session1) {
-                Transaction transaction = session1.beginTransaction();
-                log.trace("Transaction in created, {}", transaction);
+                session1.beginTransaction();
 
-                session1.saveOrUpdate(user);
-                log.trace("User entity is in persist state: {}, session: {}", user, session1);
+//                session1.save(user);
+
+                Company company1 = session1.get(Company.class, 1L);
+                System.out.println("");
 
                 session1.getTransaction().commit();
             }
-            log.warn("User entity is in detach state: {}", user);
-        } catch (Exception e) {
-            log.error("Exception: {}", e);
-            throw e;
         }
     }
 }
