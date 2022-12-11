@@ -3,6 +3,7 @@ import model.entity.Chat;
 import model.entity.Company;
 import model.entity.PersonalInfo;
 import model.entity.User;
+import model.entity.UsersChat;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import util.HibernateUtil;
@@ -11,17 +12,10 @@ import util.HibernateUtil;
 public class HibernateRunner {
 
     public static void main(String[] args) {
-        Company company = Company.builder()
-                .name("Google2")
+        UsersChat usersChat = UsersChat.builder()
+                .createdBy("admin")
                 .build();
-        User user = User.builder()
-                .username("ivan@gmail.com")
-                .personalInfo(PersonalInfo.builder()
-                        .firstname("Ivan")
-                        .lastname("Ivanov")
-                        .build())
-                .company(company)
-                .build();
+
 
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
 
@@ -32,8 +26,14 @@ public class HibernateRunner {
 //                User user1 = session1.get(User.class, 1L);
 //                User user3 = session1.get(User.class, 3L);
 
-                Chat chat2 = session1.get(Chat.class, 2L);
+                User user3 = session1.get(User.class, 3L);
 
+                Chat chat2 = session1.get(Chat.class, 3L);
+
+                usersChat.setUser(user3);
+                usersChat.setChat(chat2);
+
+                session1.save(usersChat);
 
 //                session1.save(user);
 

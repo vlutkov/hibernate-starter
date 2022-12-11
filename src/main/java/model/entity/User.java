@@ -22,9 +22,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +32,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = "userChats")
+@EqualsAndHashCode(of = "userChats")
 @Builder
 @Entity
 @TypeDef(name = "dmdev", typeClass = JsonBinaryType.class)
@@ -61,11 +60,6 @@ public class User {
     private Company company;
 
     @Builder.Default
-    @ManyToMany
-    @JoinTable(
-            name = "user_chat",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_id")
-    )
-    private List<Chat> chats = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<UsersChat> userChats = new ArrayList<>();
 }
