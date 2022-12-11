@@ -1,4 +1,5 @@
 import lombok.extern.slf4j.Slf4j;
+import model.entity.Chat;
 import model.entity.Company;
 import model.entity.PersonalInfo;
 import model.entity.User;
@@ -28,9 +29,15 @@ public class HibernateRunner {
             try (session1) {
                 session1.beginTransaction();
 
+//                User user1 = session1.get(User.class, 1L);
+//                User user3 = session1.get(User.class, 3L);
+
+                Chat chat2 = session1.get(Chat.class, 2L);
+
+
 //                session1.save(user);
 
-                Company company1 = session1.get(Company.class, 1L);
+//                Company company1 = session1.get(Company.class, 1L);
                 System.out.println("");
 
                 session1.getTransaction().commit();
